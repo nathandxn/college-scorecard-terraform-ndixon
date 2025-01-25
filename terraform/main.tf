@@ -18,3 +18,7 @@ terraform {
 provider "aws" {
   region = var.region
 }
+
+resource "aws_ecr_repository" "college-scorecard-repository" {
+  name = "college-scorecard"
+}
