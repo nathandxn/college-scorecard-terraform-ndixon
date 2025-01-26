@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "college-scorecard-terraform-ndixon"
+version = "1.0.0"
+description = "Terraform scripting for creating resources for College Scorecard analysis"
+authors = ["Nathan Dixon <nathandxn@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10.0"
+
+[tool.poetry.dev-dependencies]
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
