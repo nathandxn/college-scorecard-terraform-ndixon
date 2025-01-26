@@ -19,12 +19,23 @@ jobs:
           os: linux
           terraform_version: 1.5.7
       - run:
+          command: |
+            cp .pre-commit-config.yaml pre-commit-cache-key.txt
+            python --version --version >> pre-commit-cache-key.txt
+      - restore_cache:
+          keys:
+            - v1-pre-commit-cache-{{ checksum "pre-commit-cache-key.txt" }}
+      - run:
           name: Run pre-commit hook
           command: |
             curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
             pip install pre-commit
             pre-commit install
             pre-commit run --all-files
+      - save_cache:
+          key: v1-pre-commit-cache-{{ checksum "pre-commit-cache-key.txt" }}
+          paths:
+            - ~/.cache/pre-commit
 
   validate-terraform:
     description: Validate terraform config
