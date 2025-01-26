@@ -21,5 +21,6 @@ provider "aws" {
 }
 
 resource "aws_ecr_repository" "college-scorecard-repository" {
-  name = var.ecr_repository_name
+  name                 = var.ecr_repository_name
+  image_tag_mutability = "IMMUTABLE"
 }
