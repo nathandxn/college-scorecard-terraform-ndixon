@@ -1,4 +1,5 @@
 terraform {
+  required_version = ">= v1.5.7"
   backend "remote" {
     hostname     = "app.terraform.io"
     organization = "ndixon"
@@ -20,5 +21,5 @@ provider "aws" {
 }
 
 resource "aws_ecr_repository" "college-scorecard-repository" {
-  name = "college-scorecard"
+  name = var.ecr_repository_name
 }

@@ -5,3 +5,8 @@ variable "region" {
   type        = string
   default     = "us-east-1"
 }
+
+variable "ecr_repository_name" {
+  description = "Name of ecr repository to push images"
+  type        = string
+}
