@@ -15,4 +15,4 @@ jobs:
 workflows:
   build-and-test:
     jobs:
-      - test-python
+      - pre_commit_lint
