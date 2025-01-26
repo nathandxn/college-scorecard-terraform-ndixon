@@ -4,6 +4,8 @@
 version: 2.1
 orbs:
   python: circleci/python@2
+  terraform: circleci/terraform@3.5.0
+
 jobs:
   pre_commit_lint:
     resource_class: small
@@ -11,6 +13,10 @@ jobs:
       - image: cimg/python:3.11.11
     steps:
       - checkout
+      - terraform/install:
+          arch: amd64
+          os: linux
+          terraform_version: 1.5.7
 
 workflows:
   build-and-test:
