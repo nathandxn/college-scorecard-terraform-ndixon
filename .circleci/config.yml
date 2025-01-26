@@ -8,6 +8,7 @@ orbs:
 
 jobs:
   pre_commit_lint:
+    description: Run pre-commit checks
     resource_class: small
     docker:
       - image: cimg/python:3.11.11
@@ -25,7 +26,18 @@ jobs:
             pre-commit install
             pre-commit run --all-files
 
+  validate-terraform:
+    description: Validate terraform config
+    resource_class: small
+    docker:
+      - image: hashicorp/terraform:1.5.7
+    steps:
+      - checkout
+      - run:
+          command: make validate-terraform
+
 workflows:
   build-and-test:
     jobs:
       - pre_commit_lint
+      - validate-terraform
