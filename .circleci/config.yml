@@ -34,7 +34,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: make validate-terraform
+          command: make validate-terraform | bash
 
 workflows:
   build-and-test:
