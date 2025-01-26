@@ -17,6 +17,12 @@ jobs:
           arch: amd64
           os: linux
           terraform_version: 1.5.7
+      - run:
+          name: Run pre-commit hook
+          command: |
+            pip install pre-commit
+            pre-commit install
+            pre-commit run --all-files
 
 workflows:
   build-and-test:
