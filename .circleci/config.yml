@@ -52,8 +52,22 @@ jobs:
       - run:
           command: make validate-terraform
 
+  security-scan:
+    description: Snyk scan for vulnerabilities
+    resource_class: small
+    docker:
+      - image: cimg/base:2025.01
+    steps:
+      - checkout
+      - snyk/scan:
+          command: test
+          fail-on-issues: true
+          #severity-threshold: high | critical
+          organization: ${SNYK_CICD_ORGANIZATION}
+
 workflows:
   build-and-test:
     jobs:
       - pre_commit_lint
       - validate-terraform
+      - security-scan
