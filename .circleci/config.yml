@@ -59,18 +59,11 @@ jobs:
       - image: cimg/base:2025.01
     steps:
       - checkout
-      - snyk/scan:
-          command: test
-          fail-on-issues: true
-          severity-threshold: high
-          organization: ${SNYK_CICD_ORGANIZATION}
-          monitor-on-build: false
-      - snyk/scan:
-          command: iac test
-          fail-on-issues: true
-          severity-threshold: high
-          organization: ${SNYK_CICD_ORGANIZATION}
-          monitor-on-build: false
+      - snyk/install:
+          cli-version: 1.1295.2
+      - run:
+          name: Run snyk test
+          command: snyk test --all-projects --org=${SNYK_CICD_ORGANIZATION} --severity-threshold=high
 
 workflows:
   build-and-test:
