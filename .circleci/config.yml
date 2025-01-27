@@ -66,7 +66,10 @@ jobs:
           command: snyk test --all-projects --org=${SNYK_CICD_ORGANIZATION} --severity-threshold=high
       - run:
           name: Run snyk iac test
-          command: snyk iac test --org=${SNYK_CICD_ORGANIZATION} --severity-threshold=low
+          command: snyk iac test --org=${SNYK_CICD_ORGANIZATION} --severity-threshold=high
+      - run:
+          name: Run snyk code test
+          command: snyk code test --org=${SNYK_CICD_ORGANIZATION} --severity-threshold=high
 
 workflows:
   build-and-test:
