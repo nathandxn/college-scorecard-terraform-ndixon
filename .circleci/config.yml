@@ -5,6 +5,7 @@ version: 2.1
 orbs:
   python: circleci/python@2
   terraform: circleci/terraform@3.5.0
+  snyk: snyk/snyk@2.2.0
 
 jobs:
   pre_commit_lint:
