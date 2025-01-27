@@ -62,8 +62,9 @@ jobs:
       - snyk/scan:
           command: test
           fail-on-issues: true
-          #severity-threshold: high | critical
+          severity-threshold: high | critical
           organization: ${SNYK_CICD_ORGANIZATION}
+          monitor-on-build: false
 
 workflows:
   build-and-test:
