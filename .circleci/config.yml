@@ -65,6 +65,12 @@ jobs:
           severity-threshold: high
           organization: ${SNYK_CICD_ORGANIZATION}
           monitor-on-build: false
+      - snyk/scan:
+          command: iac test
+          fail-on-issues: true
+          severity-threshold: high
+          organization: ${SNYK_CICD_ORGANIZATION}
+          monitor-on-build: false
 
 workflows:
   build-and-test:
