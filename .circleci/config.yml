@@ -7,6 +7,11 @@ orbs:
   terraform: circleci/terraform@3.5.0
   snyk: snyk/snyk@2.2.0
 
+base: &base
+  resource_class: small
+  docker:
+    - image: cimg/base:2025.01
+
 jobs:
   pre_commit_lint:
     description: Run pre-commit checks
@@ -53,10 +58,8 @@ jobs:
           command: make validate-terraform
 
   security-scan:
+    <<: *base
     description: Snyk scan for vulnerabilities
-    resource_class: small
-    docker:
-      - image: cimg/base:2025.01
     steps:
       - checkout
       - snyk/install:
