@@ -24,3 +24,7 @@ resource "aws_ecr_repository" "college-scorecard-reporting-api-repository" {
   name                 = var.ecr_repository_name
   image_tag_mutability = "IMMUTABLE"
 }
+
+resource "aws_vpc" "default_vpc" {
+  cidr_block = "10.0.0.0/16"
+}
