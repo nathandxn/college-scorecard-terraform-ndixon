@@ -1,2 +1,2 @@
 region              = "us-east-1"
-ecr_repository_name = "college-scorecard"
+ecr_repository_name = "college-scorecard-reporting-api"

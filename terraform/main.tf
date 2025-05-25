@@ -20,7 +20,7 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_ecr_repository" "college-scorecard-repository" {
+resource "aws_ecr_repository" "college-scorecard-reporting-api-repository" {
   name                 = var.ecr_repository_name
   image_tag_mutability = "IMMUTABLE"
 }
