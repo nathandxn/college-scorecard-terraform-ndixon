@@ -75,3 +75,19 @@ resource "aws_security_group" "ecs_sg" {
 resource "aws_ecs_cluster" "main_cluster" {
   name = var.reporting_api_cluster_name
 }
+
+# creates an IAM role named ecsTaskExecutionRole that can be assumed by ecs tasks
+resource "aws_iam_role" "ecs_task_execution" {
+  name = "ecsTaskExecutionRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "ecs-tasks.amazonaws.com"
+      }
+    }]
+  })
+}
