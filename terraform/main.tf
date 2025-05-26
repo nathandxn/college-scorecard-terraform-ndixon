@@ -71,3 +71,7 @@ resource "aws_security_group" "ecs_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_ecs_cluster" "main_cluster" {
+  name = var.reporting_api_cluster_name
+}
