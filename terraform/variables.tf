@@ -15,3 +15,9 @@ variable "reporting_api_cluster_name" {
   description = "Name of ecs cluster for reporting api"
   type        = string
 }
+
+variable "app_name" {
+  description = "Name of reporting app"
+  default     = "college-scorecard-reporting-api"
+  type        = string
+}

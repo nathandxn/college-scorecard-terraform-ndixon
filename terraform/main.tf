@@ -27,6 +27,13 @@ resource "aws_ecr_repository" "college-scorecard-reporting-api-repository" {
 
 resource "aws_vpc" "main_vpc" {
   cidr_block = "10.0.0.0/16"
+
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+
+  tags = {
+    Name = "college-scorecard-reporting-api"
+  }
 }
 
 resource "aws_subnet" "subnet1" {
@@ -96,4 +103,14 @@ resource "aws_iam_role" "ecs_task_execution" {
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_attach" {
   role       = aws_iam_role.ecs_task_execution.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+resource "aws_ecs_task_definition" "reporting-api" {
+  family                   = var.app_name
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = aws_iam_role.ecs_task_execution.arn
+
 }
