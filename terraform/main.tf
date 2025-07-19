@@ -73,10 +73,19 @@ resource "aws_route_table" "rt" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
+
+  tags = {
+    Application = "college-scorecard-reporting-api"
+  }
 }
 
-resource "aws_route_table_association" "rta" {
+resource "aws_route_table_association" "rta1" {
   subnet_id      = aws_subnet.subnet1.id
+  route_table_id = aws_route_table.rt.id
+}
+
+resource "aws_route_table_association" "rta2" {
+  subnet_id      = aws_subnet.subnet2.id
   route_table_id = aws_route_table.rt.id
 }
 
