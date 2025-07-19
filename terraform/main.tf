@@ -45,6 +45,10 @@ resource "aws_subnet" "subnet1" {
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main_vpc.id
+
+  tags = {
+    Application = "college-scorecard-reporting-api"
+  }
 }
 
 resource "aws_route_table" "rt" {
