@@ -32,7 +32,7 @@ resource "aws_vpc" "main_vpc" {
   enable_dns_support   = true
 
   tags = {
-    Name = "college-scorecard-reporting-api"
+    Application = "college-scorecard-reporting-api"
   }
 }
 
