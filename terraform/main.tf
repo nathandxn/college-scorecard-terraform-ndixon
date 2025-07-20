@@ -141,4 +141,13 @@ resource "aws_ecs_task_definition" "reporting-api" {
   memory                   = "512"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
 
+  container_definitions = jsonencode([{
+    name      = "college-scorecard-reporting-api",
+    image     = "${aws_ecr_repository.college-scorecard-reporting-api-repository.repository_url}:6e06469e53dfdc51106a6334998abb2d8e1f01e9",
+    essential = true,
+    portMappings = [{
+      containerPort = 3000,
+      protocol      = "tcp"
+    }]
+  }])
 }
