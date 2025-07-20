@@ -151,3 +151,20 @@ resource "aws_ecs_task_definition" "reporting-api" {
     }]
   }])
 }
+
+# ECS Service
+resource "aws_ecs_service" "reporting-api-service" {
+  name            = "college-scorecard-reporting-service"
+  cluster         = aws_ecs_cluster.main_cluster.id
+  task_definition = aws_ecs_task_definition.reporting-api.arn
+  desired_count   = 2
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    subnets          = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+    security_groups  = [aws_security_group.ecs_sg.id]
+    assign_public_ip = true
+  }
+
+  depends_on = [aws_iam_role_policy_attachment.ecs_task_execution_attach]
+}
