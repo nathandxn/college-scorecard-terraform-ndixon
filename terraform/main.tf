@@ -151,6 +151,18 @@ resource "aws_security_group" "ecs_sg" {
   }
 }
 
+resource "aws_lb" "reporting_api_lb" {
+  name               = "reporting-api-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb_sg.id]
+  subnets            = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+
+  tags = {
+    Application = "college-scorecard-reporting-api"
+  }
+}
+
 resource "aws_ecs_task_definition" "reporting-api" {
   family                   = var.app_name
   requires_compatibilities = ["FARGATE"]
