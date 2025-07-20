@@ -163,6 +163,28 @@ resource "aws_lb" "reporting_api_lb" {
   }
 }
 
+resource "aws_lb_target_group" "reporting_api_tg" {
+  name        = "reporting-api-tg"
+  port        = 3000
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = aws_vpc.main_vpc.id
+
+  health_check {
+    path                = "/"
+    protocol            = "HTTP"
+    interval            = 300
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    matcher             = "200"
+  }
+
+  tags = {
+    Application = "college-scorecard-reporting-api"
+  }
+}
+
 resource "aws_ecs_task_definition" "reporting-api" {
   family                   = var.app_name
   requires_compatibilities = ["FARGATE"]
