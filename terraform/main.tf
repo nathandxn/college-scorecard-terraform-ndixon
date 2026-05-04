@@ -292,7 +292,7 @@ resource "aws_ecs_task_definition" "reporting-api" {
 
   container_definitions = jsonencode([{
     name      = "college-scorecard-reporting-api",
-    image     = "${aws_ecr_repository.college-scorecard-reporting-api-repository.repository_url}:6c3b65b9cfb152e2870184c2a241583badd412fb",
+    image     = "${aws_ecr_repository.college-scorecard-reporting-api-repository.repository_url}:4c89210194bc04782fdff8530cca2b7ab821189f",
     essential = true,
     portMappings = [{
       containerPort = 3000,
