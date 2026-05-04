@@ -23,7 +23,7 @@ jobs:
       - terraform/install:
           arch: amd64
           os: linux
-          terraform_version: 1.5.7
+          terraform_version: 1.15.1
       - run:
           command: |
             cp .pre-commit-config.yaml pre-commit-cache-key.txt
@@ -51,7 +51,7 @@ jobs:
       - terraform/install:
           arch: amd64
           os: linux
-          terraform_version: 1.5.7
+          terraform_version: 1.15.1
       - run:
           command: make validate-terraform
 
