@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= v1.5.7"
+  required_version = ">= 1.10.0"
   backend "remote" {
     hostname     = "app.terraform.io"
     organization = "ndixon"
@@ -11,7 +11,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 5.0"
     }
   }
 }
@@ -185,6 +185,26 @@ resource "aws_lb_target_group" "reporting_api_tg" {
   }
 }
 
+resource "aws_lb_listener" "reporting_api_http" {
+  load_balancer_arn = aws_lb.reporting_api_lb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.reporting_api_tg.arn
+  }
+}
+
+resource "aws_cloudwatch_log_group" "reporting_api" {
+  name              = "/ecs/${var.app_name}"
+  retention_in_days = 30
+
+  tags = {
+    Application = "college-scorecard-reporting-api"
+  }
+}
+
 resource "aws_ecs_task_definition" "reporting-api" {
   family                   = var.app_name
   requires_compatibilities = ["FARGATE"]
@@ -200,7 +220,15 @@ resource "aws_ecs_task_definition" "reporting-api" {
     portMappings = [{
       containerPort = 3000,
       protocol      = "tcp"
-    }]
+    }],
+    logConfiguration = {
+      logDriver = "awslogs",
+      options = {
+        awslogs-group         = aws_cloudwatch_log_group.reporting_api.name,
+        awslogs-region        = var.region,
+        awslogs-stream-prefix = "ecs"
+      }
+    }
   }])
 }
 
@@ -218,5 +246,14 @@ resource "aws_ecs_service" "reporting-api-service" {
     assign_public_ip = true
   }
 
-  depends_on = [aws_iam_role_policy_attachment.ecs_task_execution_attach]
+  load_balancer {
+    target_group_arn = aws_lb_target_group.reporting_api_tg.arn
+    container_name   = "college-scorecard-reporting-api"
+    container_port   = 3000
+  }
+
+  depends_on = [
+    aws_iam_role_policy_attachment.ecs_task_execution_attach,
+    aws_lb_listener.reporting_api_http,
+  ]
 }
