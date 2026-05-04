@@ -21,3 +21,8 @@ variable "app_name" {
   default     = "college-scorecard-reporting-api"
   type        = string
 }
+
+variable "domain_name" {
+  description = "Public domain name (apex) served by the reporting API"
+  type        = string
+}
