@@ -23,6 +23,10 @@ provider "aws" {
 resource "aws_ecr_repository" "college-scorecard-reporting-api-repository" {
   name                 = var.ecr_repository_name
   image_tag_mutability = "IMMUTABLE"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_vpc" "main_vpc" {
